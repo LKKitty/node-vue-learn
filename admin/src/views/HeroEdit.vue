@@ -5,6 +5,31 @@
       <el-form-item label="名称">
         <el-input v-model="model.name"></el-input>
       </el-form-item>
+      <el-form-item label="称号">
+        <el-input v-model="model.title"></el-input>
+      </el-form-item>
+      <el-form-item label="类型">
+        <el-select v-model="model.categories" multiple>
+          <el-option 
+          v-for="item of categories" 
+          :key="item._id"
+          :label="item.name"
+          :value="item._id"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="难度">
+        <el-rate style="margin-top:0.6rem" :max="9" show-score v-model="model.scores.difficult"></el-rate>
+      </el-form-item>
+      <el-form-item label="技能">
+        <el-rate style="margin-top:0.6rem" :max="9" show-score v-model="model.scores.skills"></el-rate>
+      </el-form-item>
+      <el-form-item label="攻击">
+        <el-rate style="margin-top:0.6rem" :max="9" show-score v-model="model.scores.attack"></el-rate>
+      </el-form-item>
+      <el-form-item label="生存">
+        <el-rate style="margin-top:0.6rem" :max="9" show-score v-model="model.scores.survive"></el-rate>
+      </el-form-item>
       <el-form-item label="头像">
         <el-upload
           class="avatar-uploader"
@@ -25,11 +50,19 @@
 <script>
 export default {
   props: {
-    id: {}
+    id: {},
   },
   data() {
     return {
-      model: {}
+      model: {
+        scores:{
+          difficult:0,
+          skills:0,
+          attack:0,
+          survive:0,
+        }
+      },
+      categories:[],
     };
   },
   methods: {
@@ -52,10 +85,15 @@ export default {
     },
     async fetch() {
       const res = await this.$http.get(`rest/heros/${this.id}`);
-      this.model = res.data;
+      this.model = Object.assign({},this.model,res.data)
+    },
+    async fetchCategories() {
+      const res = await this.$http.get(`rest/categories`);
+      this.categories = res.data;
     }
   },
   created() {
+    this.fetchCategories()
     this.id && this.fetch();
   }
 };
