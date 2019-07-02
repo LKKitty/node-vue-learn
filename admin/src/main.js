@@ -3,6 +3,7 @@ import App from './App.vue'
 import './plugins/element.js'
 import router from './router'
 import http from './http.js'
+import './views/style.css'
 
 Vue.config.productionTip = false
 Vue.prototype.$http = http
