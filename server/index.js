@@ -10,6 +10,8 @@ app.use(express.json())
 app.set('secret','fsadfsaf5df')
 
 // 静态文件托管
+app.use('/admin',express.static(__dirname + '/admin'))
+app.use('/',express.static(__dirname + '/web'))
 app.use('/uploads',express.static(__dirname + '/uploads'))
 
 require('./plugins/db')(app)
