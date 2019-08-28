@@ -122,11 +122,10 @@ export default {
   data() {
     return {
       model: {
+        name: "",
+        avatar: "",
         scores:{
           difficult:0,
-          skills:0,
-          attack:0,
-          survive:0,
         }
       },
       categories:[],
